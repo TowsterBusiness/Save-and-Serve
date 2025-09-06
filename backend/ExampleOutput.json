@@ -1,0 +1,64 @@
+[
+    {
+        "GeneralInfo": {
+            "id": 715563,
+            "title": "Pierogi Casserole",
+            "image": "https://img.spoonacular.com/recipes/715563-312x231.jpg",
+            "missedIngredients": 0,
+            "usedIngredients": [
+                "4.0 tablespoons of butter",
+                "0.5 cups of milk",
+                "2.0 larges of onions",
+                "1.5 cups of sharp cheddar cheese",
+                "1.0 pound of potatoes",
+                "1.0 pound of extra wide egg noodles"
+            ]
+        },
+        "instructions": [
+            "Preheat oven to 375 degrees. Spray a large 2 large casserole dish with cooking spray.Three separate items need cooked. You can cook them all at once to avoid having one sit aside for too long.(Prepare your potatoes and set aside) Meanwhile, boil your noodles but reduce cooking time by 4 minutes to avoid overcooking.",
+            "Drain and set aside. Prepare your onions by cooking in the 4 tbsp. of butter over medium heat until tender.",
+            "Add milk, 1 cup of cheese, salt and pepper, and onion mixture to your potatoes. Mash using a large wooden spoon or a hand held potato masher. Mash until soft, but some chunks remain. You don't want a completely smooth texture.",
+            "Add in your noodles and toss to coat. Taste for seasoning and add more if necessary. If mixture seems dry, add more milk and butter until the entire mixture is lightly coated.",
+            "Place in casserole dish.",
+            "Sprinkle with the remaining \u00bd cup of cheese.",
+            "Bake in your preheated oven for 25 minutes or until cheese starts to bubble.",
+            "Serve immediately and enjoy!"
+        ],
+        "nutrition": {
+            "calories": "845",
+            "fat": "32g",
+            "protein": "30g",
+            "carbohydrates": "110g"
+        },
+        "price": 6.2013
+    },
+    {
+        "GeneralInfo": {
+            "id": 656962,
+            "title": "Potato Gratin with Goat Cheese",
+            "image": "https://img.spoonacular.com/recipes/656962-312x231.jpg",
+            "missedIngredients": 0,
+            "usedIngredients": [
+                "25.0 grams of butter",
+                "1.0 teaspoon of garlic",
+                "5.3 ounces of chavrie goat cheese",
+                "300.0 milliliters of milk",
+                "8.0 russet potatoes",
+                "0.5 Cs of crosscut scallions"
+            ]
+        },
+        "instructions": [
+            "Place cut potatoes in a large saucepan, with enough salted cold water to cover the potatoes by 1/2 inch.Bring to a simmer and cook for 20 to 25 minutes until they are tender but not falling apart.While the potatoes are cooking, in a small saucepan heat the milk, butter, chopped garlic and Chavrie Goat Cheese over moderately low heat, stirring, until the butter and goat cheese are just melted and smooth. Keep the mixture warm.",
+            "Drain the potatoes well and while still warm mix. with an electric mixer for 2 minutes. fold in the Chavrie mixture, the scallion, and salt and pepper to taste, and mix until the potatoes are fluffy and smooth 1-2 minutes",
+            "Transfer the mixture to a 9 inch baking dish. (The potatoes may be prepared up to this point 2 days in advance and kept covered and chilled).",
+            "Bake in a 350 degree oven until golden brown 20-25 minutes"
+        ],
+        "nutrition": {
+            "calories": "265",
+            "fat": "7g",
+            "protein": "9g",
+            "carbohydrates": "40g"
+        },
+        "price": 8.3422
+    }
+]
