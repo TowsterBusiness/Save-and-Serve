@@ -1,64 +1,250 @@
 [
     {
         "GeneralInfo": {
-            "id": 715563,
-            "title": "Pierogi Casserole",
-            "image": "https://img.spoonacular.com/recipes/715563-312x231.jpg",
+            "id": 664340,
+            "title": "Vanilla Yogurt Mousse With Strawberry Marshmallow",
+            "image": "https://img.spoonacular.com/recipes/664340-312x231.jpg",
             "missedIngredients": 0,
             "usedIngredients": [
-                "4.0 tablespoons of butter",
-                "0.5 cups of milk",
-                "2.0 larges of onions",
-                "1.5 cups of sharp cheddar cheese",
-                "1.0 pound of potatoes",
-                "1.0 pound of extra wide egg noodles"
+                "125.0 grams of vanilla yoghurt",
+                "60.0 milliliters of milk",
+                "80.0 grams of strawberry flavoured marshmallow",
+                "50.0 grams of blueberries"
             ]
         },
         "instructions": [
-            "Preheat oven to 375 degrees. Spray a large 2 large casserole dish with cooking spray.Three separate items need cooked. You can cook them all at once to avoid having one sit aside for too long.(Prepare your potatoes and set aside) Meanwhile, boil your noodles but reduce cooking time by 4 minutes to avoid overcooking.",
-            "Drain and set aside. Prepare your onions by cooking in the 4 tbsp. of butter over medium heat until tender.",
-            "Add milk, 1 cup of cheese, salt and pepper, and onion mixture to your potatoes. Mash using a large wooden spoon or a hand held potato masher. Mash until soft, but some chunks remain. You don't want a completely smooth texture.",
-            "Add in your noodles and toss to coat. Taste for seasoning and add more if necessary. If mixture seems dry, add more milk and butter until the entire mixture is lightly coated.",
-            "Place in casserole dish.",
-            "Sprinkle with the remaining \u00bd cup of cheese.",
-            "Bake in your preheated oven for 25 minutes or until cheese starts to bubble.",
-            "Serve immediately and enjoy!"
+            "Place strawberry marshmallows, vanilla yoghurt, and whole milk in a pot.",
+            "Heat the mixture over the slow flame until the marshmallows are melted and all the ingredients are well-combined.",
+            "Remove and cool.",
+            "Divide half of the fresh blueberries into two serving glasses, and slowly pour in the mousse. Cover and chill for an hour until set. Arrange the rest of the blueberries on the top of the mousse.",
+            "Serve."
         ],
         "nutrition": {
-            "calories": "845",
-            "fat": "32g",
-            "protein": "30g",
-            "carbohydrates": "110g"
+            "calories": "98",
+            "fat": "1g",
+            "protein": "4g",
+            "carbohydrates": "16g"
         },
-        "price": 6.2013
+        "price": 1.5482
     },
     {
         "GeneralInfo": {
-            "id": 656962,
-            "title": "Potato Gratin with Goat Cheese",
-            "image": "https://img.spoonacular.com/recipes/656962-312x231.jpg",
+            "id": 639637,
+            "title": "Classic scones",
+            "image": "https://img.spoonacular.com/recipes/639637-312x231.jpg",
             "missedIngredients": 0,
             "usedIngredients": [
-                "25.0 grams of butter",
-                "1.0 teaspoon of garlic",
-                "5.3 ounces of chavrie goat cheese",
-                "300.0 milliliters of milk",
-                "8.0 russet potatoes",
-                "0.5 Cs of crosscut scallions"
+                "0.75 cups of milk",
+                "4.0 servings of strawberry jam and cream",
+                "50.0 grams of butter"
             ]
         },
         "instructions": [
-            "Place cut potatoes in a large saucepan, with enough salted cold water to cover the potatoes by 1/2 inch.Bring to a simmer and cook for 20 to 25 minutes until they are tender but not falling apart.While the potatoes are cooking, in a small saucepan heat the milk, butter, chopped garlic and Chavrie Goat Cheese over moderately low heat, stirring, until the butter and goat cheese are just melted and smooth. Keep the mixture warm.",
-            "Drain the potatoes well and while still warm mix. with an electric mixer for 2 minutes. fold in the Chavrie mixture, the scallion, and salt and pepper to taste, and mix until the potatoes are fluffy and smooth 1-2 minutes",
-            "Transfer the mixture to a 9 inch baking dish. (The potatoes may be prepared up to this point 2 days in advance and kept covered and chilled).",
-            "Bake in a 350 degree oven until golden brown 20-25 minutes"
+            "Using fingertips, rub butter into flour until mixture resembles fine breadcrumbs.Make a well in the centre of the dry ingredients and add milk, stirring with a metal spatula or butter knife until mixture comes away from the sides of the bowl. If mixture is dry, add a little extra milk.Turn mixture onto a lightly floured bench and bring the dough together until a rough ball of dough is formed. Do not over-knead. Pat dough to 2 cm thickness. With a clean knife, quarter the dough or use a round cutter to cut rounds.Arrange scones onto a baking paper lined tray and bake at 220C for 12-15 minutes until golden and they sound hollow when lightly tapped on the base.",
+            "Serve scones straight from the oven with jam and cream."
         ],
         "nutrition": {
-            "calories": "265",
-            "fat": "7g",
+            "calories": "398",
+            "fat": "12g",
             "protein": "9g",
-            "carbohydrates": "40g"
+            "carbohydrates": "61g"
         },
-        "price": 8.3422
+        "price": 2.0315
+    },
+    {
+        "GeneralInfo": {
+            "id": 665823,
+            "title": "Melt Your Heart",
+            "image": "https://img.spoonacular.com/recipes/665823-312x231.jpg",
+            "missedIngredients": 0,
+            "usedIngredients": [
+                "200.0 milliliters of plain/flavour yogurt",
+                "1.0 Handful of blueberries",
+                "10.0 strawberries"
+            ]
+        },
+        "instructions": [
+            "Give the yogurt a good stir and spoon it into the mini heart shape ice-cube tray.",
+            "Freeze it for at least 2 hours or more till harden. (you can prepared this 1 day ahead).",
+            "Rinse and cut the strawberries into halves, serve with blueberries or any fruits of your choice together with a few yogurt cubes in short glass."
+        ],
+        "nutrition": {
+            "calories": "103",
+            "fat": "3g",
+            "protein": "4g",
+            "carbohydrates": "14g"
+        },
+        "price": 2.5734
+    },
+    {
+        "GeneralInfo": {
+            "id": 635492,
+            "title": "Blueberry Loaf With Blueberry Syrup",
+            "image": "https://img.spoonacular.com/recipes/635492-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "3.0 cups of blueberries",
+                "0.5 tablespoons of butter",
+                "2.0 larges of eggs",
+                "0.75 cups of milk"
+            ]
+        },
+        "instructions": [
+            "BATTER",
+            "Combine the sugar and butter until it is light yellow.",
+            "Add the eggs and blend.",
+            "Mix the flour, baking powder, salt and zest together.",
+            "Add them into the sugar mixture a little at a time alternating with the milk.Toss the blueberries with a tablespoon of flour and fold them into the batter.BAKERub a little shortening at the bottom of a loaf pan.",
+            "Cut a piece of parchment paper the size of the bottom of the pan and line the pan with the parchment paper.",
+            "Pour the batter into the pan and bake it at 350F for an hour or until a tester comes out dry.  Allow it to cool on a rack before cutting it.Make blueberry syrup by mixing sugar and blueberries boiling them down to light syrup. The amount of sugar is dependant on the sweetness of the blueberries.",
+            "Add the sugar accordingly.  When the syrup is thick enough, strain it through a fine strainer and allow it to cool to room temperature.Note: This loaf can be made with cranberries."
+        ],
+        "nutrition": {
+            "calories": "139",
+            "fat": "5g",
+            "protein": "5g",
+            "carbohydrates": "18g"
+        },
+        "price": 4.5088
+    },
+    {
+        "GeneralInfo": {
+            "id": 715413,
+            "title": "Strawberries and Cream Filled Cupcakes",
+            "image": "https://img.spoonacular.com/recipes/715413-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "12.0 ounces of cream cheese",
+                "1.0 tablespoon of milk",
+                "1.0 stick of butter"
+            ]
+        },
+        "instructions": []
+    },
+    {
+        "GeneralInfo": {
+            "id": 715422,
+            "title": "Summer Popsicle Series \u2013 Strawberry",
+            "image": "https://img.spoonacular.com/recipes/715422-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "2.0 tablespoons of chobani greek yogurt",
+                "8.0 strawberries",
+                "2.0 tablespoons of milk"
+            ]
+        },
+        "instructions": []
+    },
+    {
+        "GeneralInfo": {
+            "id": 648368,
+            "title": "Jalapeno Queso With Goat Cheese",
+            "image": "https://img.spoonacular.com/recipes/648368-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "5.3 ounces of goat cheese",
+                "8.0 ounces of canned tomatoes",
+                "1.0 ea. jalapeno pepper"
+            ]
+        },
+        "instructions": [
+            "Mix all ingredients in a glass bowl and slowly heat in the microwave until piping hot.",
+            "Salt and freshly ground black pepper to taste."
+        ],
+        "nutrition": {
+            "calories": "474",
+            "fat": "32g",
+            "protein": "31g",
+            "carbohydrates": "17g"
+        },
+        "price": 5.6328
+    },
+    {
+        "GeneralInfo": {
+            "id": 642058,
+            "title": "Easy Peasy Strawberry Dessert",
+            "image": "https://img.spoonacular.com/recipes/642058-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "4.0 ounces of cream cheese",
+                "0.5 cups of strawberry jam",
+                "1.0 cup of strawberries"
+            ]
+        },
+        "instructions": [
+            "In the bowl of your mixer, mix together the cream cheese and the jam until well blended, about a minute or so.",
+            "Gently stir in the whipped topping.",
+            "In four ramekins spoon in half of the sliced strawberries.",
+            "Pour the cream cheese mixture over the strawberries.",
+            "Top with remaining strawberries.",
+            "Serve immediately or refrigerate until ready to use."
+        ],
+        "nutrition": {
+            "calories": "270",
+            "fat": "12g",
+            "protein": "2g",
+            "carbohydrates": "38g"
+        },
+        "price": 5.2498000000000005
+    },
+    {
+        "GeneralInfo": {
+            "id": 636458,
+            "title": "Bunny Eggs Kids Breakfast",
+            "image": "https://img.spoonacular.com/recipes/636458-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "12.0 blueberries",
+                "2.0 extra larges of eggs",
+                "2.0 large slices of mild cheddar cheese"
+            ]
+        },
+        "instructions": [
+            "Cook bacon in large skillet until crisp.",
+            "Remove bacon from skillet, reserving 1 tablespoon drippings in skillet.",
+            "Drain bacon on paper towels.",
+            "Add 3 eggs to reserved drippings; cover. Cook 4 to 6 minutes or until whites are opaque and completely set and yolks are beginning to thicken around edges.",
+            "Remove eggs to individual serving plates; keep warm. Repeat with remaining eggs.For each bunny, place 2 bacon strips on egg for ears.",
+            "Cut cheese strips in half to create whiskers; add blueberries for eyes."
+        ],
+        "nutrition": {
+            "calories": "213",
+            "fat": "19g",
+            "protein": "8g",
+            "carbohydrates": "1g"
+        },
+        "price": 4.1492
+    },
+    {
+        "GeneralInfo": {
+            "id": 636603,
+            "title": "Butternut Squash Soup with Fresh Goat Cheese",
+            "image": "https://img.spoonacular.com/recipes/636603-312x231.jpg",
+            "missedIngredients": 1,
+            "usedIngredients": [
+                "10.6 ounces of goat cheese pyramid",
+                "0.5 quarts of milk"
+            ]
+        },
+        "instructions": [
+            "Peel and remove seeds from the squash cut in large 2 inch pieces.",
+            "Place squash in heavy gauge sauce pot and cover with the milk and water.",
+            "Bring to a boil and simmer for 20 minutes until very tender.",
+            "Add 1 package Chavrie Goat Cheese Pyramid and bring back to a simmer.",
+            "Remove from the heat.",
+            "Carefully remove squash with a slotted spoon and place in blender.",
+            "Add enough of the cooking liquid to cover the squash puree in the blender. Be very careful: you must leave the center cap of the blender off so you do not trap the steam (cover loosely with a towel).",
+            "Pour into a 1 gallon sauce pot and keep warm.",
+            "Reserve and repeat until all the squash has been pureed.",
+            "Adjust to desired consistency with the remaining cooking liquid. Season with salt and pepper.",
+            "To serve, ladle the hot soup into the individual soup bowls and top with a dollop of Chavrie Goat Cheese Pyramid garnish with fresh herbs."
+        ],
+        "nutrition": {
+            "calories": "235",
+            "fat": "13g",
+            "protein": "13g",
+            "carbohydrates": "18g"
+        },
+        "price": 12.38
     }
 ]
