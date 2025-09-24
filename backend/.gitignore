@@ -1,3 +1,4 @@
 LearningAPICalls/*.json
 *.jpg
 *.png
+.env
