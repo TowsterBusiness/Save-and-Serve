@@ -143,9 +143,8 @@ class recipieMaker():
         
     def getImageURL(self, query):
         params = {
+            "engine": "google_images_light",
             "q": query, 
-            "tbm": "isch",
-            "ijn": "0",
             "api_key": os.getenv("SERPAPI_KEY")
         }
 

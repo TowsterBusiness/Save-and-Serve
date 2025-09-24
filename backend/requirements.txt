@@ -3,5 +3,5 @@ google-genai
 requests
 pillow
 uvicorn
-serpapi
+google-search-results
 python-dotenv
