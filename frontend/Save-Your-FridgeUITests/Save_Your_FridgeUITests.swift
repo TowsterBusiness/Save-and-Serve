@@ -1,8 +1,8 @@
 //
 //  Save_Your_FridgeUITests.swift
-//  Save Your FridgeUITests
+//  Save-Your-FridgeUITests
 //
-//  Created by Towster on 9/30/25.
+//  Created by Towster on 10/1/25.
 //
 
 import XCTest
