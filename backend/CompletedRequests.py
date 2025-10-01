@@ -132,7 +132,7 @@ class recipieMaker():
         
         self.getRecipiesMatchingIngridents()
         self.getSpecificsOnRecipies()
-        self.replaceImageWithURL()
+        # self.replaceImageWithURL()
         
     def replaceImageWithURL(self):
         for i, recipie in enumerate(self.outputJSON):
