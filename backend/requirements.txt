@@ -5,3 +5,4 @@ pillow
 uvicorn
 google-search-results
 python-dotenv
+python-multipart

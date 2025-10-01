@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 import uvicorn
 from CompletedRequests import recipieMaker
@@ -21,10 +21,11 @@ async def root():
     return {"message": "Hello Front End"}
 
 
-@app.get("/getRecipies")
-async def getRecipies(image: bytes):
+@app.post("/getRecipies")
+async def getRecipies(image: UploadFile = File(...)):
     worker = recipieMaker()
-    worker.getRecipies(image)
+    contents = await image.read()
+    worker.getRecipies(contents)
     outputJSON = worker.outputJSON
     return {"response": outputJSON}
 
