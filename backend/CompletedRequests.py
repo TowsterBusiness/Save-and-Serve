@@ -5,6 +5,7 @@ from google import genai
 from PIL import Image
 import json
 import os
+from serpapi import GoogleSearch
 
 class recipieMaker():
     
@@ -131,6 +132,29 @@ class recipieMaker():
         
         self.getRecipiesMatchingIngridents()
         self.getSpecificsOnRecipies()
+        # self.replaceImageWithURL()
+        
+    def replaceImageWithURL(self):
+        for i, recipie in enumerate(self.outputJSON):
+            title = recipie["GeneralInfo"]["title"]
+            imageURL = self.getImageURL(title + " food")
+            if imageURL:
+                self.outputJSON[i]["GeneralInfo"]["image"] = imageURL
+        
+    def getImageURL(self, query):
+        params = {
+            "engine": "google_images_light",
+            "q": query, 
+            "api_key": os.getenv("SERPAPI_KEY")
+        }
+
+        search = GoogleSearch(params)
+        results = search.get_dict()
+        
+        images_results = results.get("images_results", [])
+        if images_results:
+            return images_results[0].get("original")  # first image URL
+        return None
         
 
 
