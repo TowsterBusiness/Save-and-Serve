@@ -1,4 +1,5 @@
 import json
+import io
 from fractions import Fraction
 import requests
 from google import genai
@@ -10,10 +11,10 @@ from serpapi import GoogleSearch
 class recipieMaker():
     
     def __init__(self):
-        self.geminiClient = genai.Client(api_key=os.getenv("GoogleAPIKEY"))
+        self.geminiClient = genai.Client(api_key=os.getenv("GEMINI_KEY"))
         
         self.headers = {"Content-Type": "application/json"}
-        self.default_params = {"apiKey":  os.getenv("SpoonacularAPIKEY")}
+        self.default_params = {"apiKey":  os.getenv("SPOONACULAR_KEY")}
 
     def image_to_text(self, image):
         
@@ -33,7 +34,24 @@ class recipieMaker():
         return text
     
     def processBinaryImage(self, imageInBinary = None):
-        return Image.open(imageInBinary)
+        """
+        Accepts either raw bytes (from UploadFile.read()), a file-like object, or a path string.
+        If raw bytes are provided, wrap them in io.BytesIO so PIL does not try to interpret
+        the bytes as a filename (which triggers a UnicodeDecodeError).
+        """
+        # If bytes were passed (common when using UploadFile.read()), wrap in BytesIO
+        if isinstance(imageInBinary, (bytes, bytearray)):
+            return Image.open(io.BytesIO(imageInBinary))
+
+        # If a file-like object was passed, PIL can open it directly
+        if hasattr(imageInBinary, 'read'):
+            return Image.open(imageInBinary)
+
+        # If a path (str) was passed, let PIL open the path
+        if isinstance(imageInBinary, str):
+            return Image.open(imageInBinary)
+
+        raise ValueError("Unsupported type for imageInBinary")
         # return Image.open("LearningGeminiCalls\ImageOfFridge.jpg") # PIL IMAGE
     
     def getRecipiesMatchingIngridents(self):
@@ -114,10 +132,12 @@ class recipieMaker():
         image = self.processBinaryImage(imageInBinary)
         print("Image Processed")
 
-        ingredients = self.image_to_text(image)
+        ingredients = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
+
+        # ingredients = self.image_to_text(image)
 
         # ingredients = "Ketchup, Jam, Mustard, Salad Dressing, Salsa, Milk, Yogurt, Bagels, Grapes, Strawberries, Blueberries, Lettuce, Tomatoes, Peppers, Eggs, Cheese, Tofu, Chocolate Syrup, Hummus, Chips, Butter, Orange Juice, Water Bottles"
-        print(f"Ingridients are: {ingredients}")
+        print(f"Ingredients are: {ingredients}")
         
         ingredientsparams ={
             "ingredients":ingredients,
