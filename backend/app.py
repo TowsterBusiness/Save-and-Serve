@@ -41,30 +41,19 @@ async def getRecipies(image: UploadFile = File(...)):
     outputJSON = worker.outputJSON
     return {"response": outputJSON}
 
-
-
-
-
-
-
-# @app.get("/test")
-# async def test(image: bytes | None = None):
-#     """Return sample output when running in DEV_MODE to make tests stable."""
-#     try:
-#         data = read_example_output()
-#         return data
-#     except FileNotFoundError:
-#         return {"error": "ExampleOutput.json not found"}
-#     except json.JSONDecodeError as e:
-#         return {"error": f"Failed to parse ExampleOutput.json: {e}"}
-
-
-# @app.post("/getResponseJSON")
-# async def getResponseJSON():
-#     with open("ExampleOutput.json", "r") as f:
-#         outputJSON = f.read()
-#     return {"response": outputJSON}
-
+@app.post("/getRecipiesTest")
+async def getRecipies(image: UploadFile = File(...)):
+    Image = await image.read()
+    print("Image received of size:", len(Image), "bytes")
+    
+    """Return sample output when running in DEV_MODE to make tests stable."""
+    try:
+        data = read_example_output()
+        return data
+    except FileNotFoundError:
+        return {"error": "ExampleOutput.json not found"}
+    except json.JSONDecodeError as e:
+        return {"error": f"Failed to parse ExampleOutput.json: {e}"}
 
 
 

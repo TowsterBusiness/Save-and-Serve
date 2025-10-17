@@ -13,7 +13,11 @@ class ImageUploader {
     private init() {}
 
     func uploadImage(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "http://127.0.0.1:8000/getRecipies") else { return }
+        guard let url = URL(string: "http://50.113.93.61:8000/getRecipiesTest") else {
+            completion(.failure(NSError(domain: "Invalid URL", code: 0)))
+            return
+        }
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
@@ -39,8 +43,11 @@ class ImageUploader {
                 return
             }
 
-            if let data = data, let responseString = String(data: data, encoding: .utf8) {
+            if let data = data,
+               let responseString = String(data: data, encoding: .utf8) {
                 completion(.success(responseString))
+            } else {
+                completion(.failure(NSError(domain: "Invalid response", code: 0)))
             }
         }.resume()
     }

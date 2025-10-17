@@ -29,9 +29,22 @@
 		FE4061E02E8D1C9300B083DD /* Save-Your-FridgeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Save-Your-FridgeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FE40623E2EA077E400B083DD /* Exceptions for "Save-Your-Fridge" folder in "Save-Your-Fridge" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FE4061C82E8D1C9000B083DD /* Save-Your-Fridge */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FE4061CB2E8D1C9000B083DD /* Save-Your-Fridge */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FE40623E2EA077E400B083DD /* Exceptions for "Save-Your-Fridge" folder in "Save-Your-Fridge" target */,
+			);
 			path = "Save-Your-Fridge";
 			sourceTree = "<group>";
 		};
@@ -398,6 +411,7 @@
 				DEVELOPMENT_TEAM = R3V8N3R257;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Save-Your-Fridge/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to take photos of ingredients.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -427,6 +441,7 @@
 				DEVELOPMENT_TEAM = R3V8N3R257;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Save-Your-Fridge/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to the camera to take photos of ingredients.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
