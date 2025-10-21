@@ -1,11 +1,19 @@
-
-# call locally hosted api with the function /test
-from regex import F
 import requests
 
-with open("backend/ImageOfFridge.jpg", "rb") as image:
+with open("ImageOfFridge.jpg", "rb") as image:
 
     files = {'image': ('ImageOfFridge.jpg', image, 'image/jpeg')}
-    
-    response = requests.post("http://localhost:8000/getRecipies", files=files)
-    print(response.json())
+
+
+    # do this call as many times as needed
+    ingredients = requests.post("http://localhost:8000/getIngredients", files=files)
+    print(ingredients.json())
+
+
+
+# do this call once ready for recipies
+response = requests.post("http://localhost:8000/getRecipies", json=ingredients.json())
+print(response.text)
+
+# response = requests.post("https://saveyourfridge-backend.onrender.com/getRecipies", data = response)
+# print(response.json())
