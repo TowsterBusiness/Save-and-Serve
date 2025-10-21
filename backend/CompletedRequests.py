@@ -29,8 +29,23 @@ class recipieMaker():
         )
 
         text = response.text
-        with open("output.json", "w") as f:
-            json.dump({"text": text}, f, indent=4)
+        # with open("output.json", "w") as f:
+        #     json.dump({"text": text}, f, indent=4)
+        return text
+    
+    def text_to_text(self,text):
+        prompt = f"""Here is a list of ingridents found in a fridge {text}. 
+        After analyzing the ingredients, remove ingridents that sound the same (ex milk and whole milk).
+        Return the final list of ingridients with this change, in a comma seperated list (Respond to this prompt with a comma seperated list of the ingridients)"""
+
+        response = self.geminiClient.models.generate_content(
+            model="gemini-2.5-flash-lite",
+            contents=[prompt]
+        )
+
+        text = response.text
+        # with open("output.json", "w") as f:
+        #     json.dump({"text": text}, f, indent=4)
         return text
     
     def processBinaryImage(self, imageInBinary = None):
@@ -127,20 +142,50 @@ class recipieMaker():
 
         print(json.dumps(self.outputJSON, indent=4))
     
-    
-    def getRecipies(self, imageInBinary = None):
+    def getIngridents(self, imageInBinary = None):
         image = self.processBinaryImage(imageInBinary)
         print("Image Processed")
 
-        ingredients = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
+        # ingredients = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
 
-        # ingredients = self.image_to_text(image)
+        ingredients = self.image_to_text(image)
+        
+        return ingredients
+    
+    # def getRecipies(self, imageInBinary = None):
+    #     image = self.processBinaryImage(imageInBinary)
+    #     print("Image Processed")
 
-        # ingredients = "Ketchup, Jam, Mustard, Salad Dressing, Salsa, Milk, Yogurt, Bagels, Grapes, Strawberries, Blueberries, Lettuce, Tomatoes, Peppers, Eggs, Cheese, Tofu, Chocolate Syrup, Hummus, Chips, Butter, Orange Juice, Water Bottles"
-        print(f"Ingredients are: {ingredients}")
+    #     # ingredients = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
+
+    #     ingredients = self.image_to_text(image)
+
+    #     # ingredients = "Ketchup, Jam, Mustard, Salad Dressing, Salsa, Milk, Yogurt, Bagels, Grapes, Strawberries, Blueberries, Lettuce, Tomatoes, Peppers, Eggs, Cheese, Tofu, Chocolate Syrup, Hummus, Chips, Butter, Orange Juice, Water Bottles"
+    #     print(f"Ingredients are: {ingredients}")
+        
+    #     ingredientsparams ={
+    #         "ingredients":ingredients,
+    #         "number":2,
+    #         "ranking":2,
+    #         "ignorePantry":True,
+    #         **self.default_params
+    #     }
+
+    #     self.recipiesAPIFOUND = requests.get(f"https://api.spoonacular.com/recipes/findByIngredients",  headers = self.headers, params=ingredientsparams).json()
+        
+        
+    #     self.getRecipiesMatchingIngridents()
+    #     self.getSpecificsOnRecipies()
+    #     # self.replaceImageWithURL()
+    
+    
+    def getRecipies(self, ingridents):
+        print("Unprocessed ingridents:", ingridents)
+        processedIngridents = self.text_to_text(ingridents)
+        print(f"Processed Ingredients are: {processedIngridents}")
         
         ingredientsparams ={
-            "ingredients":ingredients,
+            "ingredients":processedIngridents,
             "number":2,
             "ranking":2,
             "ignorePantry":True,
@@ -152,9 +197,10 @@ class recipieMaker():
         
         self.getRecipiesMatchingIngridents()
         self.getSpecificsOnRecipies()
-        # self.replaceImageWithURL()
-        
+        # self.replaceImageWithURL()    
+    
     def replaceImageWithURL(self):
+        
         for i, recipie in enumerate(self.outputJSON):
             title = recipie["GeneralInfo"]["title"]
             imageURL = self.getImageURL(title + " food")

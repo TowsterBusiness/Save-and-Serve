@@ -1,11 +1,10 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File
 import uvicorn
 from CompletedRequests import recipieMaker
-from dotenv import load_dotenv
 import json
 import os
-
-load_dotenv("backend/example.env")
+load_dotenv("example.env")
 
 app = FastAPI()
 
@@ -22,6 +21,57 @@ async def root():
 
 
 
+# @app.post("/getRecipies")
+# async def getRecipies(image: UploadFile = File(...)):
+#     Image = await image.read()
+#     print("Image received of size:", len(Image), "bytes")
+    
+    
+#     worker = recipieMaker()
+#     worker.getRecipies(Image)
+#     outputJSON = worker.outputJSON
+#     return {"response": outputJSON}
+
+
+@app.post("/getRecipies")
+# I want input parameter to bea json object
+async def getRecipies(Ingredients: dict):
+
+    listOfIngridients = Ingredients['response']
+    print("Ingredients received:", listOfIngridients)
+    
+    worker = recipieMaker()
+    worker.getRecipies(listOfIngridients)
+    outputJSON = worker.outputJSON
+    return {"response": outputJSON}
+
+
+@app.post("/getIngredients")
+async def getIngredients(image: UploadFile = File(...)):
+    Image = await image.read()
+    print("Image received of size:", len(Image), "bytes")
+    
+    worker = recipieMaker()
+    ingridents = worker.getIngridents(Image)
+    return {"response": ingridents}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.post("/testImagePassthrough")
 async def testImagePassthrough(image: UploadFile = File(...)):
     # save image as file locally
@@ -30,16 +80,7 @@ async def testImagePassthrough(image: UploadFile = File(...)):
     return {"response": "Image saved successfully"}
 
 
-@app.post("/getRecipies")
-async def getRecipies(image: UploadFile = File(...)):
-    Image = await image.read()
-    print("Image received of size:", len(Image), "bytes")
-    
-    
-    worker = recipieMaker()
-    worker.getRecipies(Image)
-    outputJSON = worker.outputJSON
-    return {"response": outputJSON}
+
 
 @app.post("/getRecipiesTest")
 async def getRecipies(image: UploadFile = File(...)):
@@ -54,6 +95,7 @@ async def getRecipies(image: UploadFile = File(...)):
         return {"error": "ExampleOutput.json not found"}
     except json.JSONDecodeError as e:
         return {"error": f"Failed to parse ExampleOutput.json: {e}"}
+
 
 
 
