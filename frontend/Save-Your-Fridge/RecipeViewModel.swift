@@ -23,22 +23,8 @@ class RecipeViewModel: ObservableObject {
         loadFromUserDefaults()
     }
     
-    // MARK: - Fetch Recipes
-    func fetchRecipes() {
-        guard let url = URL(string: "http://localhost:8000/test") else { return }
-        
-        URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .decode(type: [RecipeResponse].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                if case let .failure(error) = completion {
-                    print("Error fetching recipes:", error)
-                }
-            }, receiveValue: { [weak self] recipes in
-                self?.recipes = recipes
-            })
-            .store(in: &cancellables)
+    func storeRecipes(recipes: [RecipeResponse]) {
+        self.recipes = recipes
     }
     
     // MARK: - Save Recipe
@@ -46,6 +32,16 @@ class RecipeViewModel: ObservableObject {
         if !savedRecipes.contains(where: { $0.GeneralInfo.id == recipe.GeneralInfo.id }) {
             savedRecipes.append(recipe)
         }
+    }
+    
+    // MARK: - Unsave Recipe
+    func unsaveRecipe(_ recipe: RecipeResponse) {
+        savedRecipes.removeAll { $0.GeneralInfo.id == recipe.GeneralInfo.id }
+    }
+    
+    // MARK: - Check if Recipe Saved
+    func isRecipeSaved(_ recipe: RecipeResponse) -> Bool {
+        return savedRecipes.contains(where: { $0.GeneralInfo.id == recipe.GeneralInfo.id })
     }
     
     // MARK: - UserDefaults
