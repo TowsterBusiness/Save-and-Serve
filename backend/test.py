@@ -15,5 +15,5 @@ with open("ImageOfFridge.jpg", "rb") as image:
 response = requests.post("http://localhost:8000/getRecipies", json=ingredients.json())
 print(response.text)
 
-# response = requests.post("https://saveyourfridge-backend.onrender.com/getRecipies", data = response)
-# print(response.json())
+
+# TODO replace local host with https://saveyourfridge-backend.onrender.com/getRecipies
