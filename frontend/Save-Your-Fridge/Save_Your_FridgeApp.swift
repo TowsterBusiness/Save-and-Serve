@@ -15,3 +15,4 @@ struct Save_Your_FridgeApp: App {
         }
     }
 }
+
