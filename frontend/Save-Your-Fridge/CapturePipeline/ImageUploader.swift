@@ -5,15 +5,15 @@
 //  Created by Towster on 10/1/25.
 //
 
-
 import UIKit
 
 class ImageUploader {
     static let shared = ImageUploader()
     private init() {}
 
-    func uploadImage(_ image: UIImage, completion: @escaping (Result<[RecipeResponse], Error>) -> Void) {
-        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/getRecipiesTest") else {
+    // MARK: - Upload image to get ingredients
+    func uploadImageForIngredients(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/testgetIngredients") else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0)))
             return
         }
@@ -37,6 +37,7 @@ class ImageUploader {
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body
 
+        // Send request
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -49,24 +50,21 @@ class ImageUploader {
             }
 
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                // Decode wrapper object
-                struct ResponseWrapper: Decodable {
-                    let response: [RecipeResponse]
+                // Response is { "response": "Jam, Dressing, Mustard, ..." }
+                struct IngredientResponse: Decodable {
+                    let response: String
                 }
 
-                let wrapper = try decoder.decode(ResponseWrapper.self, from: data)
-                completion(.success(wrapper.response))
+                let decoded = try JSONDecoder().decode(IngredientResponse.self, from: data)
+                completion(.success(decoded.response))
+
             } catch {
-                print("❌ JSON Decoding failed:", error)
+                print("❌ JSON decoding failed:", error)
                 if let raw = String(data: data, encoding: .utf8) {
                     print("Raw backend response:\n\(raw)")
                 }
                 completion(.failure(error))
             }
-
         }.resume()
     }
 }

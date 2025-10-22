@@ -38,12 +38,18 @@ struct ContentView: View {
                         .tabItem {
                             Label("Recipes", systemImage: "list.bullet")
                         }
-                    
+
                     HistoryView(viewModel: viewModel)
                         .tabItem {
                             Label("Saved", systemImage: "bookmark.fill")
                         }
+
+                    IngredientsView(viewModel: viewModel)
+                        .tabItem {
+                            Label("Ingredients", systemImage: "leaf.fill")
+                        }
                 }
+
             }
             // Floating camera button as sheet
             .overlay(
