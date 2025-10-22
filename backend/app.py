@@ -37,7 +37,7 @@ async def root():
 # I want input parameter to bea json object
 async def getRecipies(Ingredients: dict):
 
-    listOfIngridients = Ingredients['response']
+    listOfIngridients = Ingredients['ingridients']
     print("Ingredients received:", listOfIngridients)
     
     worker = recipieMaker()
@@ -93,9 +93,3 @@ async def testImagePassthrough(image: UploadFile = File(...)):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    
-    
-    
-    
-    
-    

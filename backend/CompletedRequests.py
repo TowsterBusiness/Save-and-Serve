@@ -36,7 +36,7 @@ class recipieMaker():
     def text_to_text(self,text):
         prompt = f"""Here is a list of ingridents found in a fridge {text}. 
         After analyzing the ingredients, remove ingridents that sound the same (ex milk and whole milk).
-        Return the final list of ingridients with this change, in a comma seperated list (Respond to this prompt with a comma seperated list of the ingridients)"""
+        Return the final list of ingridients with this change, in a comma seperated list (Respond to this prompt with a comma seperated list of the ingridients)r"""
 
         response = self.geminiClient.models.generate_content(
             model="gemini-2.5-flash-lite",
