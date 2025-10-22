@@ -1,19 +1,25 @@
 import requests
 
-with open("ImageOfFridge.jpg", "rb") as image:
+ingredientsList = {"ingridients": []}
 
-    files = {'image': ('ImageOfFridge.jpg', image, 'image/jpeg')}
+def getIngredients():
+    with open("ImageOfFridge.jpg", "rb") as image:
+        files = {'image': ('ImageOfFridge.jpg', image, 'image/jpeg')}
+        
+        results =  requests.post("https://saveyourfridge-backend.onrender.com/testgetIngredients", files=files)
+        print("Ingredients received:", results.json()['response'])
+        return results
 
+response = getIngredients()
+ingredientsList["ingridients"].append(response.json()['response'])
 
-    # do this call as many times as needed
-    ingredients = requests.post("http://localhost:8000/getIngredients", files=files)
-    print(ingredients.json())
-
+response = getIngredients()
+ingredientsList["ingridients"].append(response.json()['response'])
 
 
 # do this call once ready for recipies
-response = requests.post("http://localhost:8000/getRecipies", json=ingredients.json())
+response = requests.post("https://saveyourfridge-backend.onrender.com/testgetRecipies", json=ingredientsList)
 print(response.text)
 
-
-# TODO replace local host with https://saveyourfridge-backend.onrender.com/getRecipies
+# response = requests.post("https://saveyourfridge-backend.onrender.com/getRecipies", data = response)
+# print(response.json())

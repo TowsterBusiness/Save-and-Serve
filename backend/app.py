@@ -37,7 +37,7 @@ async def root():
 # I want input parameter to bea json object
 async def getRecipies(Ingredients: dict):
 
-    listOfIngridients = Ingredients['response']
+    listOfIngridients = Ingredients['ingridients']
     print("Ingredients received:", listOfIngridients)
     
     worker = recipieMaker()
@@ -58,17 +58,26 @@ async def getIngredients(image: UploadFile = File(...)):
 
 
 
+@app.post("/testgetRecipies")
+async def testgetRecipies(Ingredients: dict):
+    """Return sample output when running in DEV_MODE to make tests stable."""
+    try:
+        data = read_example_output()
+        return {"response": data}
+    except FileNotFoundError:
+        return {"error": "ExampleOutput.json not found"}
+    except json.JSONDecodeError as e:
+        return {"error": f"Failed to parse ExampleOutput.json: {e}"}
+    
+    
 
 
-
-
-
-
-
-
-
-
-
+@app.post("/testgetIngredients")
+async def testgetIngredients(image: UploadFile = File(...)):
+    Image = await image.read()
+    print("Image received of size:", len(Image), "bytes")
+    
+    return {"response": "Jam, Dressing, Mustard, Salsa, Pickles, Maple Syrup, Yogurt, Milk, Creamer, Hummus, Eggs, Strawberries, Blueberries, Bell Peppers, Carrots, Oranges, Apples, Lettuce, Spinach, Deli Meat, Cheese, Butter, Bread, Juice, Water, Hot Sauce, Ketchup, Mayonnaise, Lemon Juice, Limes, Olives, Pesto, Soy Sauce, Tortillas, Sliced Cheese, Fruit Preserves"}
 
 
 
@@ -84,28 +93,5 @@ async def testImagePassthrough(image: UploadFile = File(...)):
 
 
 
-@app.post("/getRecipiesTest")
-async def getRecipies(image: UploadFile = File(...)):
-    Image = await image.read()
-    print("Image received of size:", len(Image), "bytes")
-    
-    """Return sample output when running in DEV_MODE to make tests stable."""
-    try:
-        data = read_example_output()
-        return data
-    except FileNotFoundError:
-        return {"error": "ExampleOutput.json not found"}
-    except json.JSONDecodeError as e:
-        return {"error": f"Failed to parse ExampleOutput.json: {e}"}
-
-
-
-
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    
-    
-    
-    
-    
-    
