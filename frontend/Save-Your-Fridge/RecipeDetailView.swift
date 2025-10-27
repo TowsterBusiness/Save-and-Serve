@@ -160,7 +160,7 @@ struct RecipeDetailView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(isSaved ? Color.green : Color.accentColor)
+                                .background(isSaved ? Color.accentColor : Color.gray)
                                 .cornerRadius(12)
                                 .shadow(radius: 4, y: 2)
                             }

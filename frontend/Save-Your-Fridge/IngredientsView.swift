@@ -28,6 +28,7 @@ struct IngredientsView: View {
                             .font(.title2)
                     }
                     .padding(.trailing)
+                    .foregroundColor(.accentColor)
                 }
                 .padding(.vertical)
 
@@ -55,12 +56,6 @@ struct IngredientsView: View {
 
                 // MARK: - Buttons
                 HStack(spacing: 20) {
-                    Button("Load Sample Ingredients") {
-                        let sampleResponse = "Jam, Dressing, Mustard, Salsa, Pickles, Maple Syrup, Yogurt, Milk, Creamer, Hummus, Eggs, Strawberries, Blueberries, Bell Peppers, Carrots, Oranges, Apples, Lettuce, Spinach, Deli Meat, Cheese, Butter, Bread, Juice, Water, Hot Sauce, Ketchup, Mayonnaise, Lemon Juice, Limes, Olives, Pesto, Soy Sauce, Tortillas, Sliced Cheese, Fruit Preserves"
-                        viewModel.addIngredients(from: sampleResponse)
-                    }
-                    .buttonStyle(.borderedProminent)
-
                     Button("Clear All") {
                         withAnimation {
                             viewModel.clearAllIngredients()
