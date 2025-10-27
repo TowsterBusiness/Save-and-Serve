@@ -17,7 +17,7 @@ struct ContentView: View {
                 
                 // 🧠 Custom Header
                 VStack(spacing: 4) {
-                    Text("Save Your Fridge")
+                    Text("Save and Serve")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.accentColor)
                         .padding(.top, 10)

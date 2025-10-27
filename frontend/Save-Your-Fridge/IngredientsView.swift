@@ -34,9 +34,6 @@ struct IngredientsView: View {
                 // MARK: - Ingredients List
                 if viewModel.ingredients.isEmpty {
                     VStack(spacing: 12) {
-                        Image(systemName: "leaf.slash.fill")
-                            .font(.system(size: 40))
-                            .foregroundColor(.gray.opacity(0.5))
                         Text("No saved recipes yet.")
                             .font(.system(size: 18, weight: .medium))
                             .foregroundColor(.gray)

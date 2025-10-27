@@ -13,7 +13,7 @@ class ImageUploader {
 
     // MARK: - Upload image to get ingredients
     func uploadImageForIngredients(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/testgetIngredients") else {
+        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/getIngredients") else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0)))
             return
         }

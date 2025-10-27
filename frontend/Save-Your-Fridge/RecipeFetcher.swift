@@ -13,7 +13,7 @@ class RecipeFetcher {
     private init() {}
 
     func fetchRecipes(with ingredients: [String], completion: @escaping (Result<[RecipeResponse], Error>) -> Void) {
-        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/testgetRecipies") else {
+        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/getRecipies") else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0)))
             return
         }
