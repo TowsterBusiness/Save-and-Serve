@@ -29,6 +29,8 @@ struct RecipesListView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
+                .foregroundColor(Color.white)
+                .tint(.accentColor)
                 .padding()
 
                 if let error = errorMessage {

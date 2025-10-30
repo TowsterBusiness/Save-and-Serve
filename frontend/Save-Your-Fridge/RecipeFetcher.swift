@@ -23,7 +23,7 @@ class RecipeFetcher {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         // ✅ Backend expects JSON with "Ingredients" key
-        let payload: [String: Any] = ["Ingredients": ingredients]
+        let payload: [String: Any] = ["ingredients": ingredients]
         request.httpBody = try? JSONSerialization.data(withJSONObject: payload, options: [])
 
         URLSession.shared.dataTask(with: request) { data, response, error in

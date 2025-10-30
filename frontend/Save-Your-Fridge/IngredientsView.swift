@@ -28,7 +28,6 @@ struct IngredientsView: View {
                             .font(.title2)
                     }
                     .padding(.trailing)
-                    .foregroundColor(.accentColor)
                 }
                 .padding(.vertical)
 
