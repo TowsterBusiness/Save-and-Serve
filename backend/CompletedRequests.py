@@ -2,79 +2,83 @@ import json
 import io
 from fractions import Fraction
 import requests
-from google import genai
 from PIL import Image
 import json
 import os
 from serpapi import GoogleSearch
+from vertexai.generative_models import Part
 
-class recipieMaker():
+class superAccurateRecipieMaker():
     
-    def __init__(self):
-        self.geminiClient = genai.Client(api_key=os.getenv("GEMINI_KEY"))
+    def __init__(self, model):
+        
+        self.model = model
         
         self.headers = {"Content-Type": "application/json"}
-        self.default_params = {"apiKey":  os.getenv("SPOONACULAR_KEY")}
+        self.default_params = {"apiKey": "65ed94ce760342f5bdb12f4757f2db94"} # os.getenv("SPOONACULAR_KEY")} TODO
 
-    def image_to_text(self, image):
+    def image_to_text(self, imageInBytes: bytes):
         
-        prompt = """What items can you find in this fridge? List them in a comma separated list. 
-        Do not give extra details, provide simple ingredients (Do not care for brands or types of items, just the item name). 
-        For example, the following would work: Apple, Carrots, Ranch Dressing, Milk, Eggs, Bread, etc. 
-        Every item you mention should be buyable from a grocery store. For example, do not look for leftovers or specific meals."""
-
-        response = self.geminiClient.models.generate_content(
-            model="gemini-2.5-flash-image-preview",
-            contents=[prompt, image]
+        prompt = """What items can you find in this fridge? List them in a comma separated list, and state your confidence in each item you identify (0-1).
+            Do not give extra details, provide simple ingredients (Do not care for brands or types of items, just the item name). 
+            For example, the following would work: Apple-1.0, Carrots-.9, Ranch Dressing-.8, Milk-.7, Eggs-.75, Bread-.8, etc. 
+            Every item you mention should be buyable from a grocery store. For example, do not look for leftovers or specific meals."""
+        
+        image_part = Part.from_data(
+            data=imageInBytes,
+            mime_type="image/jpeg"
         )
+        
+        contents = [prompt, image_part]
 
-        text = response.text
-        # with open("output.json", "w") as f:
-        #     json.dump({"text": text}, f, indent=4)
-        return text
+        print("Sending request to Vertex AI... (This may take a moment)")
+        
+        response = self.model.generate_content(contents)
+        
+        print(response.text)
+        
+        return response.text
     
     def text_to_text(self,text):
-        prompt = f"""Here is a list of ingridents found in a fridge {text}. 
-        After analyzing the ingredients, remove ingridents that sound the same (ex milk and whole milk).
-        Return the final list of ingridients with this change, in a comma seperated list (Respond to this prompt with a comma seperated list of the ingridients)r"""
+        prompt = f"""Here is a list of ingridents found in a fridge, with their corresponding confidence scores (0-1, meaning how confident we are in each item actually being there) {text}. 
+        After analyzing the ingredients and their values, remove ingridents that sound the exact same (ex milk and whole milk would translate to whole milk).
+        Return the final list of ingridients with this change in a comma seperated list (Respond to this prompt with a comma seperated list of the final ingridients). 
+        Lastly, remember that the output should only be ingridients, no objects like refrigator, jars, containers, or vauge descripions like condiments."""
 
-        response = self.geminiClient.models.generate_content(
-            model="gemini-2.5-flash-lite",
-            contents=[prompt]
-        )
-
-        text = response.text
-        # with open("output.json", "w") as f:
-        #     json.dump({"text": text}, f, indent=4)
-        return text
+        contents = [prompt]
+        
+        print("Sending request to Vertex AI... (This may take a moment)")
+        
+        response = self.model.generate_content(contents)
+        
+        print(response.text)
+        
+        return response.text
     
     def processBinaryImage(self, imageInBinary = None):
-        """
-        Accepts either raw bytes (from UploadFile.read()), a file-like object, or a path string.
-        If raw bytes are provided, wrap them in io.BytesIO so PIL does not try to interpret
-        the bytes as a filename (which triggers a UnicodeDecodeError).
-        """
-        # If bytes were passed (common when using UploadFile.read()), wrap in BytesIO
         if isinstance(imageInBinary, (bytes, bytearray)):
-            return Image.open(io.BytesIO(imageInBinary))
-
-        # If a file-like object was passed, PIL can open it directly
-        if hasattr(imageInBinary, 'read'):
-            return Image.open(imageInBinary)
-
-        # If a path (str) was passed, let PIL open the path
-        if isinstance(imageInBinary, str):
-            return Image.open(imageInBinary)
-
-        raise ValueError("Unsupported type for imageInBinary")
-        # return Image.open("LearningGeminiCalls\ImageOfFridge.jpg") # PIL IMAGE
-    
-    def getRecipiesMatchingIngridents(self):
+            img = Image.open(io.BytesIO(imageInBinary))
+        elif hasattr(imageInBinary, 'read'):
+            img = Image.open(imageInBinary)
+        elif isinstance(imageInBinary, str):
+            img = Image.open(imageInBinary)
+        else:
+            raise ValueError("Unsupported type for imageInBinary")
         
-        self.outputJSON = [{} for i in range(len(self.recipiesAPIFOUND))]
-
-        for i, recipe in enumerate(self.recipiesAPIFOUND):
-
+        # Step 2: Convert to bytes
+        with io.BytesIO() as output:
+            # Ensure RGB mode if needed (avoids issues with some formats)
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            img.save(output, format="JPEG")
+            return output.getvalue()
+        
+    def getRecipiesMatchingIngridents(self):
+        self.outputJSON = []
+        
+        for recipe in self.recipiesAPIFOUND:
+            recipeData = {}
+            
             id = recipe['id']
             title = recipe['title']
             image = recipe['image']
@@ -83,15 +87,13 @@ class recipieMaker():
             usedIngredients = recipe['usedIngredients']
             ingridentsList = []
             for ingrident in usedIngredients:
-
                 ofIncluded = " of "
                 amount = ingrident['amount']
 
                 if ingrident['unitLong'] == "":
                     ofIncluded = ""
-                        
+                    
                     #Check for decimals below 1, and replace with fractions
-                        
                     if ingrident['amount'] < 1:
                         # Convert to fraction
                         fraction = Fraction(ingrident['amount']).limit_denominator()
@@ -99,46 +101,45 @@ class recipieMaker():
 
                 ingridentsList.append(f"{amount} {ingrident['unitLong']}{ofIncluded}{ingrident['name']}")
 
-            self.outputJSON[i]["GeneralInfo"]={
+            recipeData["GeneralInfo"] = {
                 "id": id,
                 "title": title,
                 "image": image,
                 "missedIngredients": missedIngredients,
                 "usedIngredients": ingridentsList
             }
+            
+            self.outputJSON.append(recipeData)
 
     
     def getSpecificsOnRecipies(self):
-        for i, recipie in enumerate(self.outputJSON):
-
-            id = recipie["GeneralInfo"]["id"]
+        for recipe in self.outputJSON:
+            id = recipe["GeneralInfo"]["id"]
+            print(recipe)
             
+            # Get instructions
             instructions = requests.get(f"https://api.spoonacular.com/recipes/{id}/analyzedInstructions",  headers = self.headers, params={"stepBreakdown":True,**self.default_params}).json()
             if instructions == []:
-                self.outputJSON[i]["instructions"] = []
-                continue
-            steps = instructions[0]["steps"]
+                recipe["instructions"] = []
+            else:
+                # print("__________________\n\n\n" , instructions)
+                steps = instructions[0]["steps"]
+                # print(steps)
+                recipe["instructions"] = [step["step"] for step in steps]
+                # print([step["step"] for step in steps])
 
-            justInstructions = []
-
-            for step in steps:
-                justInstructions.append(step["step"])
-            self.outputJSON[i]["instructions"] = justInstructions
-
-            nutrition =  requests.get(f"https://api.spoonacular.com/recipes/{id}/nutritionWidget.json",  headers = self.headers, params={**self.default_params}).json()
-
-            self.outputJSON[i]["nutrition"] = {
+            # Get nutrition
+            nutrition = requests.get(f"https://api.spoonacular.com/recipes/{id}/nutritionWidget.json",  headers = self.headers, params={**self.default_params}).json()
+            recipe["nutrition"] = {
                 "calories": nutrition["calories"],
                 "fat": nutrition["fat"],
                 "protein": nutrition["protein"],
                 "carbohydrates": nutrition["carbs"]
             }
 
+            # Get price
             price_data = requests.get(f"https://api.spoonacular.com/recipes/{id}/priceBreakdownWidget.json",  headers = self.headers, params={**self.default_params}).json()
-
-            price = price_data["totalCost"]/100
-
-            self.outputJSON[i]["price"] = price
+            recipe["price"] = price_data["totalCost"]/100
 
         print(json.dumps(self.outputJSON, indent=4))
     
@@ -186,7 +187,7 @@ class recipieMaker():
         
         ingredientsparams ={
             "ingredients":processedIngridents,
-            "number":2,
+            "number":5,
             "ranking":2,
             "ignorePantry":True,
             **self.default_params
@@ -222,8 +223,25 @@ class recipieMaker():
             return images_results[0].get("original")  # first image URL
         return None
         
+# imageList = []
+# imageList.append(open("Images/IMG_9248.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9249.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9250.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9251.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9252.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9253.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9254.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9255.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9256.JPG", "rb").read())
+# imageList.append(open("Images/IMG_9257.JPG", "rb").read())
 
 
-# worker = recipieMaker()
-# worker.getRecipies()
-# print(worker.outputJSON)
+# worker = superAccurateRecipieMaker(model)
+# unprocessedIngridents = []
+# for image in imageList:
+#     unprocessedIngridents.append(worker.getIngridents(image))
+
+# print(unprocessedIngridents)
+
+# response = worker.getRecipies(unprocessedIngridents)
+# print(response)

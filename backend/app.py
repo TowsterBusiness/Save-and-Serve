@@ -1,12 +1,33 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File
 import uvicorn
-from CompletedRequests import recipieMaker
+from CompletedRequests import superAccurateRecipieMaker
 import json
 import os
-load_dotenv("example.env")
+import vertexai
+from vertexai.generative_models import GenerativeModel
+import pathlib
 
 app = FastAPI()
+
+print("Booting up, using credentials from Render secret file")
+
+key_path = "/etc/secrets/gcp_key.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
+
+if pathlib.Path(key_path).exists():
+    print("Credentials file found at:", key_path)
+else:
+    raise FileNotFoundError(f"Credentials file not found at {key_path}")
+
+print("Credentials file path:", os.environ["GOOGLE_APPLICATION_CREDENTIALS"])
+
+
+project_id = os.getenv("googleProjectID")
+location = "us-central1"
+
+vertexai.init(project=project_id, location=location)
+model = GenerativeModel("gemini-2.5-flash-lite")
 
 
 def read_example_output() -> dict:
@@ -37,10 +58,10 @@ async def root():
 # I want input parameter to bea json object
 async def getRecipies(Ingredients: dict):
 
-    listOfIngridients = Ingredients['ingridients']
+    listOfIngridients = Ingredients['ingredients']
     print("Ingredients received:", listOfIngridients)
     
-    worker = recipieMaker()
+    worker = superAccurateRecipieMaker(model)
     worker.getRecipies(listOfIngridients)
     outputJSON = worker.outputJSON
     return {"response": outputJSON}
@@ -50,8 +71,7 @@ async def getRecipies(Ingredients: dict):
 async def getIngredients(image: UploadFile = File(...)):
     Image = await image.read()
     print("Image received of size:", len(Image), "bytes")
-    
-    worker = recipieMaker()
+    worker = superAccurateRecipieMaker(model)
     ingridents = worker.getIngridents(Image)
     return {"response": ingridents}
 
