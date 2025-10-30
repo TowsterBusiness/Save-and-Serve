@@ -14,9 +14,6 @@ struct CameraScreen: View {
     @State private var image: UIImage?
     @State private var responseText = "No response yet"
     @State private var isLoading = false
-    
-    // 👈 Add this environment variable
-    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -39,7 +36,7 @@ struct CameraScreen: View {
                         )
                 }
 
-                // MARK: - Camera + Upload Buttons
+                // MARK: - Buttons
                 Button("📸 Take Photo") {
                     showCamera = true
                 }
@@ -47,7 +44,7 @@ struct CameraScreen: View {
                 .padding()
 
                 Button("⬆️ Upload Photo") {
-                    uploadImage()
+                    uploadImageForIngredients()
                 }
                 .buttonStyle(.bordered)
                 .disabled(image == nil || isLoading)
@@ -74,29 +71,21 @@ struct CameraScreen: View {
     }
 
     // MARK: - Upload Logic
-    private func uploadImage() {
+    private func uploadImageForIngredients() {
         guard let image = image else { return }
         isLoading = true
         responseText = "Uploading image..."
 
-        ImageUploader.shared.uploadImage(image) { result in
+        ImageUploader.shared.uploadImageForIngredients(image) { result in
             DispatchQueue.main.async {
                 isLoading = false
                 switch result {
-                case .success(let response):
-                    responseText = "Upload successful!"
-                    print("Server response: \(response)")
-                    
-                    // Store recipes
-                    viewModel.storeRecipes(recipes: response)
-                    
-                    // 👇 Pop back to previous screen after short delay
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                        dismiss()
-                    }
-
+                case .success(let ingredientString):
+                    responseText = "✅ Ingredients added!"
+                    print("Server ingredients: \(ingredientString)")
+                    viewModel.addIngredients(from: ingredientString)
                 case .failure(let error):
-                    responseText = "Error: \(error.localizedDescription)"
+                    responseText = "❌ Upload failed: \(error.localizedDescription)"
                 }
             }
         }

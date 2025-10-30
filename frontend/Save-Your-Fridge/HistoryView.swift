@@ -1,10 +1,3 @@
-//
-//  HistoryView.swift
-//  Save-Your-Fridge
-//
-//  Created by Towster on 10/1/25.
-//
-
 import SwiftUI
 
 struct HistoryView: View {
@@ -12,7 +5,7 @@ struct HistoryView: View {
 
     var body: some View {
         NavigationView {
-            Group {
+            VStack {
                 if viewModel.savedRecipes.isEmpty {
                     VStack(spacing: 12) {
                         Image(systemName: "bookmark.slash.fill")
@@ -24,28 +17,40 @@ struct HistoryView: View {
                             .italic()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(.systemGroupedBackground))
+                    .background(Color.white)
                 } else {
-                    ScrollView {
-                        LazyVStack(spacing: 14) {
-                            ForEach(viewModel.savedRecipes, id: \.GeneralInfo.id) { recipe in
-                                NavigationLink(destination: RecipeDetailView(recipe: recipe, viewModel: viewModel)) {
-                                    RecipeCard(recipe: recipe)
+                    // MARK: - Recipes List
+                    List(viewModel.savedRecipes, id: \.GeneralInfo.id) { recipe in
+                        NavigationLink(destination: RecipeDetailView(recipe: recipe, viewModel: viewModel)) {
+                            HStack {
+                                AsyncImage(url: URL(string: recipe.GeneralInfo.image)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 80, height: 80)
+                                        .clipped()
+                                } placeholder: {
+                                    Color.gray.frame(width: 80, height: 80)
                                 }
-                                .buttonStyle(PlainButtonStyle())
+                                .cornerRadius(8)
+
+                                VStack(alignment: .leading) {
+                                    Text(recipe.GeneralInfo.title)
+                                        .font(.headline)
+                                    Text("\(recipe.GeneralInfo.usedIngredients.count) ingredients")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
-                        .padding(.vertical, 16)
-                        .padding(.horizontal, 12)
                     }
-                    .background(Color(.systemGroupedBackground))
+                    
                 }
+                
             }
-            .navigationBarHidden(true)
+            .navigationTitle("Saved")
+            
         }
+        
     }
-}
-
-#Preview {
-    HistoryView(viewModel: RecipeViewModel())
 }

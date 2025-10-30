@@ -9,52 +9,55 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = RecipeViewModel()
-
+    @State private var showCamera = false
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                VStack(spacing: 0) {
-                    // 🧠 Custom Header
-                    VStack(spacing: 4) {
-                                Text("Save Your Fridge")
-                                    .font(.system(size: 30, weight: .bold))
-                                    .foregroundColor(.accentColor)
-                                    .padding(.top, 10)
-                                
-                                Rectangle()
-                                    .frame(height: 2)
-                                    .foregroundColor(.accentColor.opacity(0.8))
-                                    .cornerRadius(1)
-                                    .padding(.horizontal, 70)
-                            }
-                            .padding(.bottom, 8)
-                            .background(Color.white)
-                            .shadow(color: .gray.opacity(0.15), radius: 3, y: 2)
+        NavigationStack { // Only one navigation stack
+            VStack(spacing: 0) {
+                
+                // 🧠 Custom Header
+                VStack(spacing: 4) {
+                    Text("Save and Serve")
+                        .font(.system(size: 30, weight: .bold))
+                        .foregroundColor(.accentColor)
+                        .padding(.top, 10)
                     
-                    // 🧾 Main Tab View content below header
-                    ZStack {
-                        TabView {
-                            RecipesListView(viewModel: viewModel)
-                                .tabItem {
-                                    Label("Recipes", systemImage: "list.bullet")
-                                }
-                            
-                            HistoryView(viewModel: viewModel)
-                                .tabItem {
-                                    Label("Saved", systemImage: "bookmark.fill")
-                                }
-                        }
-                    }
-                    
-                    
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundColor(.accentColor.opacity(0.8))
+                        .cornerRadius(1)
+                        .padding(.horizontal, 70)
                 }
+                .padding(.bottom, 8)
+                .background(Color(.systemBackground))
+                .shadow(color: .gray.opacity(0.15), radius: 3, y: 2)
                 
-                
+                // 🧾 Main Tab View content below header
+                TabView {
+                    RecipesListView(viewModel: viewModel)
+                        .tabItem {
+                            Label("Recipes", systemImage: "list.bullet")
+                        }
+
+                    HistoryView(viewModel: viewModel)
+                        .tabItem {
+                            Label("Saved", systemImage: "bookmark.fill")
+                        }
+
+                    IngredientsView(viewModel: viewModel)
+                        .tabItem {
+                            Label("Ingredients", systemImage: "leaf.fill")
+                        }
+                }
+
+            }
+            // Floating camera button as sheet
+            .overlay(
                 VStack {
                     Spacer()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: CameraScreen(viewModel: viewModel)) {
+                        Button(action: { showCamera = true }) {
                             Image(systemName: "camera")
                                 .font(.system(size: 24))
                                 .foregroundColor(.white)
@@ -64,9 +67,12 @@ struct ContentView: View {
                         }
                         .padding(.trailing, 20)
                         .padding(.bottom, 70)
+                        .sheet(isPresented: $showCamera) {
+                            CameraScreen(viewModel: viewModel)
+                        }
                     }
                 }
-            }
+            )
         }
     }
 }

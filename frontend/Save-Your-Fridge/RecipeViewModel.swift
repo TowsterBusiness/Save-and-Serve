@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class RecipeViewModel: ObservableObject {
     @Published var recipes: [RecipeResponse] = []
@@ -16,6 +17,7 @@ class RecipeViewModel: ObservableObject {
             saveToUserDefaults()
         }
     }
+    @Published var ingredients: [String] = []
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -57,4 +59,44 @@ class RecipeViewModel: ObservableObject {
             savedRecipes = decoded
         }
     }
+    
+    func uploadImageAndFetchIngredients(_ image: UIImage) {
+        ImageUploader.shared.uploadImageForIngredients(image) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let ingredientString):
+                    self?.addIngredients(from: ingredientString)
+                case .failure(let error):
+                    print("❌ Failed to get ingredients:", error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func addIngredient(_ name: String) {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, !ingredients.contains(trimmed) else { return }
+        ingredients.insert(trimmed, at: 0)
+    }
+
+    func addIngredients(from string: String) {
+        let parsed = string
+            .split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+
+        for ingredient in parsed where !ingredients.contains(ingredient) {
+            ingredients.insert(ingredient, at: 0)
+        }
+    }
+
+    func deleteIngredient(offsets: IndexSet) {
+        ingredients.remove(atOffsets: offsets)
+    }
+
+    func clearAllIngredients() {
+        ingredients.removeAll()
+    }
+
+
 }

@@ -7,14 +7,13 @@
 
 import UIKit
 
-/// Handles image uploads to the backend for recipe generation.
 class ImageUploader {
     static let shared = ImageUploader()
     private init() {}
 
-    /// Uploads an image and retrieves recipe suggestions from the backend.
-    func uploadImage(_ image: UIImage, completion: @escaping (Result<[RecipeResponse], Error>) -> Void) {
-        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/getRecipiesTest") else {
+    // MARK: - Upload image to get ingredients
+    func uploadImageForIngredients(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let url = URL(string: "https://saveyourfridge-backend.onrender.com/getIngredients") else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0)))
             return
         }
@@ -22,11 +21,11 @@ class ImageUploader {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 
-        // Configure multipart form data
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
         var body = Data()
+
         if let imageData = image.jpegData(compressionQuality: 0.8) {
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             body.append("Content-Disposition: form-data; name=\"image\"; filename=\"photo.jpg\"\r\n".data(using: .utf8)!)
@@ -34,10 +33,11 @@ class ImageUploader {
             body.append(imageData)
             body.append("\r\n".data(using: .utf8)!)
         }
+
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body
 
-        // Perform network call
+        // Send request
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -50,15 +50,16 @@ class ImageUploader {
             }
 
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                // Decode directly into an array
-                let recipes = try decoder.decode([RecipeResponse].self, from: data)
-                completion(.success(recipes))
+                // Response is { "response": "Jam, Dressing, Mustard, ..." }
+                struct IngredientResponse: Decodable {
+                    let response: String
+                }
+
+                let decoded = try JSONDecoder().decode(IngredientResponse.self, from: data)
+                completion(.success(decoded.response))
 
             } catch {
-                print("❌ JSON Decoding failed:", error)
+                print("❌ JSON decoding failed:", error)
                 if let raw = String(data: data, encoding: .utf8) {
                     print("Raw backend response:\n\(raw)")
                 }
