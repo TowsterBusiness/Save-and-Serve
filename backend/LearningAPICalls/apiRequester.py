@@ -1,24 +1,29 @@
+import os
 import requests
+import dotenv
 
-url = "https://api.spoonacular.com/recipes/642582/priceBreakdownWidget.json"
-headers = {"Content Type": "application/json"}
+dotenv.load_dotenv("backend/example.env")
 
-ingridients = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
+# Search Recipes by Ingredients endpoint
+url = "https://api.spoonacular.com/recipes/findByIngredients"
+headers = {"Content-Type": "application/json"}
+
+ingrideints = "chicken breast, ground beef, eggs, tofu, canned tuna, chickpeas, bacon, rice, pasta, bread, tortillas, potatoes, quinoa, onions, garlic, bell peppers, carrots, spinach, tomatoes, broccoli, apples, bananas, lemons, avocados, cheese, milk, olive oil, salt, black pepper, paprika"
 default_params = {
-    "apiKey":  "65ed94ce760342f5bdb12f4757f2db94",
+    "apiKey": os.getenv("SPOONACULAR_KEY"),
 }
 
 
 # findbyIngredients
-"""
+
 params ={
-    "ingredients":ingridients,
-    "number":5,
-    "ranking":2,
-    "ignorePantry":True,
+    "ingredients":ingrideints,
+    "number":2,
+    "ranking":1,
+    "ignorePantry":True, # TODO Might be the issue we dont get many back
     **default_params
 }
-"""
+
 # analyzedInstructions
 
 
@@ -30,14 +35,19 @@ params ={
 
 # nutritionWidget and priceBreakdownWidget
 
-params ={
-    **default_params
-}
+# params ={
+#     **default_params
+# }
 
 response = requests.get(url,  headers = headers, params=params)
 print(response.status_code)
 
 import json
 
-with open("price.json", "w") as f:
-    json.dump(response.json(), f)
+# Save the recipes response
+with open("recipes.json", "w") as f:
+    json.dump(response.json(), f, indent=2)
+
+print(f"Found {len(response.json())} recipes")
+if response.json():
+    print(f"First recipe: {response.json()}")

@@ -3,7 +3,7 @@ import requests
 ingredientsList = {"ingredients": []}
 
 def getIngredients():
-    with open("Images/IMG_9248.JPG", "rb") as image:
+    with open("backend\Images\ImageOfFridge.jpg", "rb") as image:
         files = {'image': ('ImageOfFridge.jpg', image, 'image/jpeg')}
         
         results =  requests.post("https://saveyourfridge-backend.onrender.com/getIngredients", files=files)

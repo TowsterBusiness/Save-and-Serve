@@ -3,3 +3,4 @@ LearningAPICalls/*.json
 *.png
 .env
 venv/
+__pycache__/

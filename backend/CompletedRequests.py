@@ -15,7 +15,7 @@ class superAccurateRecipieMaker():
         self.model = model
         
         self.headers = {"Content-Type": "application/json"}
-        self.default_params = {"apiKey": "65ed94ce760342f5bdb12f4757f2db94"} # os.getenv("SPOONACULAR_KEY")} TODO
+        self.default_params = {"apiKey": os.getenv("SPOONACULAR_KEY")} 
 
     def image_to_text(self, imageInBytes: bytes):
         
@@ -188,7 +188,7 @@ class superAccurateRecipieMaker():
         ingredientsparams ={
             "ingredients":processedIngridents,
             "number":5,
-            "ranking":2,
+            "ranking":1,
             "ignorePantry":True,
             **self.default_params
         }
